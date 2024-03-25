@@ -1,0 +1,21 @@
+
+const String appbarText = "LOGO";
+const String dashboardHeadText = "Field Staff Dashboard";
+const String buttonText1 = "New Order";
+const String buttonText2 = "Dispatch";
+const String buttonText3 = "Payment";
+const String buttonText4 = "Create Client";
+const String buttonText5 = "Add Complaint";
+const String buttonText6 = "Un Delivered";
+const String dashboardButtonText = "CONFIRM PICK UP";
+const String dashboardButton2Text = "MY CLIENT";
+const String circleHeadText1="Pending\npicking";
+const String circleHeadText2="Confirmed";
+const String circleHeadText3="Ready for\nDispatch";
+const String circleHeadText4="Delivered";
+const String circleHeadText5="Collection";
+const String circleHeadText6="Deposit";
+const String circleHeadText7="Outstanding";
+const String circleHeadText8="Order not\nprocessed";
+const String circleHeadText9="Supply Bags";
+const String dashboardHeadText2="My Orders";

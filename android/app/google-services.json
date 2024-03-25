@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "558706877568",
+    "project_id": "customer-golden-falcon-l-c5b46",
+    "storage_bucket": "customer-golden-falcon-l-c5b46.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558706877568:android:d684ec2a073d5b8ddf7265",
+        "android_client_info": {
+          "package_name": "com.example.golden_falcon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzYCLLhQk0OrUs7fvI65CHoaBF2vhfuBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

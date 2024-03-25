@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBEQ0goZWDrhakS5RgDDPG0I-SiFnsJjrI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>558706877568</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.integrate3screens</string>
+	<key>PROJECT_ID</key>
+	<string>customer-golden-falcon-l-c5b46</string>
+	<key>STORAGE_BUCKET</key>
+	<string>customer-golden-falcon-l-c5b46.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:558706877568:ios:48d4c7d793bf1e18df7265</string>
+</dict>
+</plist>

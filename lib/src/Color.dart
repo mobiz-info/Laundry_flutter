@@ -1,0 +1,20 @@
+import 'dart:ui';
+
+const Color textgrey=Color(0XFF3F454A);
+const Color textgray=Color(0XFF4D5468);
+const Color Blue=Color(0XFF1E91FB);
+const Color White=Color(0x0ffffffff);
+const Color DividerGrey=Color(0XFFC2CCD4);
+const Color BgGrey=Color(0XFFECECEC);
+const Color lightGreyText=Color(0xFF99A4AA);
+const Color tableGreyText=Color(0xFF9A9994);
+const Color lightOrange=Color(0xFFF9E164);
+const Color darkOrange=Color(0XFFEEA319);
+const Color formBorderColor=Color(0xFFD2DFDB);
+const Color formBoxColor=Color(0xFFF3F3F3);
+const Color emailBoxColor=Color(0xFFE7DBA0);
+const Color primaryColor=Color(0xFFA38E23);
+const Color redColor=Color(0xFFCD0C0C);
+const Color greenColor=Color(0xFF107E0E);
+const Color tableLightGrey=Color(0xFFF2F2F2);
+const Color incDecBorderColor=Color(0xFFCEDCDF);
