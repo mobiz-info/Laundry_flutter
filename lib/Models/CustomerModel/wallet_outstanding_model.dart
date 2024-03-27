@@ -1,79 +1,102 @@
 import 'dart:convert';
+/// stats : true
+/// data : {"wallet_balance":"418.0","outstanding":35.0,"name":"sreelekha","Todays_delivery":[{"order_number":"GFL141","total_amount":"3.0"},{"order_number":"GFL140","total_amount":"2.0"},{"order_number":"GFL139","total_amount":"10.0"},{"order_number":"GFL131","total_amount":"10.0"}]}
+/// message : "Customer Wallet Details!"
 
-class CustomerBalanceModel {
-  bool stats;
-  CData data;
-  String message;
+WalletOutstandingModel walletOutstandingModelFromJson(String str) => WalletOutstandingModel.fromJson(json.decode(str));
+String walletOutstandingModelToJson(WalletOutstandingModel data) => json.encode(data.toJson());
+class WalletOutstandingModel {
+  WalletOutstandingModel({
+      this.stats, 
+      this.data, 
+      this.message,});
 
-  CustomerBalanceModel({
-    required this.stats,
-    required this.data,
-    required this.message,
-  });
+  WalletOutstandingModel.fromJson(dynamic json) {
+    stats = json['stats'];
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    message = json['message'];
+  }
+  bool? stats;
+  Data? data;
+  String? message;
 
-  CustomerBalanceModel copyWith({
-    bool? stats,
-    CData? data,
-    String? message,
-  }) =>
-      CustomerBalanceModel(
-        stats: stats ?? this.stats,
-        data: data ?? this.data,
-        message: message ?? this.message,
-      );
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['stats'] = stats;
+    if (data != null) {
+      map['data'] = data?.toJson();
+    }
+    map['message'] = message;
+    return map;
+  }
 
-  factory CustomerBalanceModel.fromRawJson(String str) => CustomerBalanceModel.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory CustomerBalanceModel.fromJson(Map<String, dynamic> json) => CustomerBalanceModel(
-    stats: json["stats"],
-    data: CData.fromJson(json["data"]),
-    message: json["message"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "stats": stats,
-    "data": data.toJson(),
-    "message": message,
-  };
 }
 
-class CData {
-  String walletBalance;
-  num outstanding;
-  String name;
+/// wallet_balance : "418.0"
+/// outstanding : 35.0
+/// name : "sreelekha"
+/// Todays_delivery : [{"order_number":"GFL141","total_amount":"3.0"},{"order_number":"GFL140","total_amount":"2.0"},{"order_number":"GFL139","total_amount":"10.0"},{"order_number":"GFL131","total_amount":"10.0"}]
 
-  CData({
-    required this.walletBalance,
-    required this.outstanding,
-    required this.name
-  });
+Data dataFromJson(String str) => Data.fromJson(json.decode(str));
+String dataToJson(Data data) => json.encode(data.toJson());
+class Data {
+  Data({
+      this.walletBalance, 
+      this.outstanding, 
+      this.name, 
+      this.todaysDelivery,});
 
-  CData copyWith({
-    String? walletBalance,
-    num? outstanding,
-    String? name,
-  }) =>
-      CData(
-        walletBalance: walletBalance ?? this.walletBalance,
-        outstanding: outstanding ?? this.outstanding,
-        name: name ?? this.name,
-      );
+  Data.fromJson(dynamic json) {
+    walletBalance = json['wallet_balance'];
+    outstanding = json['outstanding'];
+    name = json['name'];
+    if (json['Todays_delivery'] != null) {
+      todaysDelivery = [];
+      json['Todays_delivery'].forEach((v) {
+        todaysDelivery?.add(TodaysDelivery.fromJson(v));
+      });
+    }
+  }
+  String? walletBalance;
+  double? outstanding;
+  String? name;
+  List<TodaysDelivery>? todaysDelivery;
 
-  factory CData.fromRawJson(String str) => CData.fromJson(json.decode(str));
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['wallet_balance'] = walletBalance;
+    map['outstanding'] = outstanding;
+    map['name'] = name;
+    if (todaysDelivery != null) {
+      map['Todays_delivery'] = todaysDelivery?.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
 
-  String toRawJson() => json.encode(toJson());
+}
 
-  factory CData.fromJson(Map<String, dynamic> json) => CData(
-    walletBalance: json["wallet_balance"],
-    outstanding: json["outstanding"],
-    name: json["name"]
-  );
+/// order_number : "GFL141"
+/// total_amount : "3.0"
 
-  Map<String, dynamic> toJson() => {
-    "wallet_balance": walletBalance,
-    "outstanding": outstanding,
-    "name": name
-  };
+TodaysDelivery todaysDeliveryFromJson(String str) => TodaysDelivery.fromJson(json.decode(str));
+String todaysDeliveryToJson(TodaysDelivery data) => json.encode(data.toJson());
+class TodaysDelivery {
+  TodaysDelivery({
+      this.orderNumber, 
+      this.totalAmount,});
+
+  TodaysDelivery.fromJson(dynamic json) {
+    orderNumber = json['order_number'];
+    totalAmount = json['total_amount'];
+  }
+  String? orderNumber;
+  String? totalAmount;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['order_number'] = orderNumber;
+    map['total_amount'] = totalAmount;
+    return map;
+  }
+
 }
