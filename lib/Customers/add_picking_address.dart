@@ -169,7 +169,7 @@ class _AddPickingAddressState extends State<AddPickingAddress> {
                         const SizedBox(height: 16),
                         RegisterTextFormField(
                           getController: buildingNameNoController,
-                          labelText: 'Building Name / No:',
+                          labelText: 'Building No / Name:',
                           imagePaths: 'Assets/Images/building_icon.svg',
                         ),
                         const SizedBox(height: 16),

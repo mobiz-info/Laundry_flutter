@@ -74,6 +74,7 @@ class _GenerateInvoiceState extends State<GenerateInvoice> {
                               }
                               setState(() {});
                             },
+                            style: const TextStyle(color: textgrey, fontSize: 13, fontWeight: FontWeight.w400),
                             decoration: const InputDecoration(
                               fillColor: Colors.white,
                               filled: true,

@@ -106,6 +106,7 @@ class _OrderStatusState extends State<OrderStatus>  with SingleTickerProviderSta
                     children: [
                       TextField(
                         onChanged: updateSearchMobileNum,
+                        style: const TextStyle(color: textgrey, fontSize: 13, fontWeight: FontWeight.w400),
                         decoration: const InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
@@ -165,6 +166,7 @@ class _OrderStatusState extends State<OrderStatus>  with SingleTickerProviderSta
                     children: [
                       TextField(
                         onChanged: updateSearchOrderNum,
+                        style: const TextStyle(color: textgrey, fontSize: 13, fontWeight: FontWeight.w400),
                         decoration: const InputDecoration(
                           fillColor: Colors.white,
                           filled: true,

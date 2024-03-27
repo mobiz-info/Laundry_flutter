@@ -48,7 +48,7 @@ class _ChooseAccountTypeState extends State<ChooseAccountType> {
                     },
                     child: AccountTypeCard(
                       imagePath: imagesList[index],
-                      title: index == 0 ? 'Personal' : 'Corporate',
+                      title: index == 0 ? 'Home' : 'Corporate',
                       isSelected: selectedIndex == index, // Check if the item is selected
                     ),
                   );

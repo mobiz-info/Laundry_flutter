@@ -34,6 +34,8 @@ class CustomerHomeScreen extends StatefulWidget {
 
 class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
 
+  final CustomerRepository customerRepository = CustomerRepository();
+
   Future<void> showLogoutConfirmationDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -191,7 +193,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 backgroundColor: BgGrey,
                 appBar: ScreenAppbar(
                   text: "Hai",
-                  name: state.c_data.name ?? '--',
+                  name: state.data?.name ?? '--',
                   svgNeed: true,
                   imagepath: "Assets/Images/user_dp.svg",
                   needAction: true,
@@ -322,7 +324,13 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           showLogoutConfirmationDialog(context);
                         },
                       ),
-                      const SizedBox(height: 68)
+                      Divider(color: DividerGrey.withOpacity(0.6)),
+                      const SizedBox(height: 28),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 18),
+                        child: Text('Version : 1.0.0', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: textgrey)),
+                      ),
+                      const SizedBox(height: 68),
                     ],
                   ),
                 ),
@@ -485,7 +493,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                                                               Row(
                                                                 children: [
                                                                   Text(
-                                                                    '${state.c_data.outstanding} AED',
+                                                                    '${state.data?.outstanding} AED',
                                                                     style: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w600),
                                                                   ),
                                                                 ],
@@ -505,6 +513,75 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                                                         )
                                                       ],
                                                     ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            state.data?.todaysDelivery?.isEmpty == true ? Container() : const SizedBox(height: 8),
+                                            state.data?.todaysDelivery?.isEmpty == true ?
+                                            Container() :
+                                            SizedBox(
+                                              width: double.infinity,
+                                              child: Card(
+                                                elevation: 0,
+                                                child: Container(
+                                                  padding: const EdgeInsets.all(18.0),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius: BorderRadius.circular(16),
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      const Text('Order Delivery Today !',
+                                                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: textgrey),
+                                                      ),
+                                                      const SizedBox(height: 12),
+                                                      ListView.builder(
+                                                        shrinkWrap: true,
+                                                          itemCount: state.data?.todaysDelivery?.length,
+                                                          itemBuilder: (BuildContext context, int index) {
+                                                            return Text('Order No: ${state.data?.todaysDelivery?[index].orderNumber ?? '--'}, '
+                                                                'Amount: ${state.data?.todaysDelivery?[index].totalAmount ?? '--'} AED',
+                                                              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: textgrey),
+                                                            );
+                                                          }
+                                                      ),
+                                                      const SizedBox(height: 12),
+                                                      SizedBox(
+                                                        width: double.infinity,
+                                                        height: 28,
+                                                        child: ElevatedButton(
+                                                          onPressed: () async {
+                                                            List<String> orderNumbers = [];
+                                                            for (int index = 0; index < (state.data?.todaysDelivery?.length ?? 0); index++) {
+                                                              String? orderNumber = state.data!.todaysDelivery?[index].orderNumber;
+                                                              if (orderNumber != null) {
+                                                                orderNumbers.add(orderNumber.toString());
+                                                              }
+                                                            }
+                                                            if (orderNumbers.isNotEmpty) {
+                                                              await customerRepository.getNotAvailableData(
+                                                                token: authData.user_token!,
+                                                                orderNumbers: orderNumbers,
+                                                              ).then((value) {
+                                                                context.read<CustomerBloc>().add(GetBalanceEvent(authData.user_token!, authData.user_id.toString()));
+                                                              });
+                                                            }
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                            backgroundColor: Colors.white,
+                                                            surfaceTintColor: Colors.white,
+                                                            elevation: 0,
+                                                            side: const BorderSide(width: 1, color: redColor),
+                                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                                          ),
+                                                          child: const Text('Not available', style: TextStyle(fontSize: 11, color: redColor, fontWeight: FontWeight.w400),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
@@ -540,7 +617,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                                                             const SizedBox(width: 16.0),
                                                             Expanded(
                                                               child: Text(
-                                                                '${state.c_data.walletBalance} AED',
+                                                                '${state.data?.walletBalance} AED',
                                                                 style: const TextStyle(fontSize: 18, color: primaryColor, fontWeight: FontWeight.w600),
                                                               ),
                                                             ),
@@ -552,7 +629,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                                                           height: 36,
                                                           child: ElevatedButton(
                                                             onPressed: () {
-                                                              Navigator.push(context, MaterialPageRoute(builder: (context) => Wallet(walletBalance: state.c_data.walletBalance)),
+                                                              Navigator.push(context, MaterialPageRoute(builder: (context) => Wallet(walletBalance: state.data!.walletBalance.toString())),
                                                               );
                                                             },
                                                             style: ElevatedButton.styleFrom(

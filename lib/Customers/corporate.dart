@@ -179,11 +179,13 @@ class _CorporateState extends State<Corporate> {
                             } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailIDController.text) &&
                                 emailRegController.text.endsWith('.com')) {
                               snackBar(context, message: 'Please enter valid email id');
-                            } else if (whatsAppController.text.isEmpty) {
-                              snackBar(context, message: 'Please enter whats app number');
-                            } else if (whatsAppController.text.length != 10) {
-                              snackBar(context, message: 'Please enter valid whats app number');
-                            } else if (passwordController.text.isEmpty) {
+                            }
+                            // else if (whatsAppController.text.isEmpty) {
+                            //   snackBar(context, message: 'Please enter whats app number');
+                            // } else if (whatsAppController.text.length != 10) {
+                            //   snackBar(context, message: 'Please enter valid whats app number');
+                            // }
+                            else if (passwordController.text.isEmpty) {
                               snackBar(context, message: 'Please enter password');
                             }
                             else {

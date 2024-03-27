@@ -24,6 +24,7 @@ import 'package:golden_falcon/Models/CustomerModel/items_incre_decre_model.dart'
 import 'package:golden_falcon/Models/CustomerModel/location_list_model.dart';
 import 'package:golden_falcon/Models/CustomerModel/my_addresses_list_model.dart';
 import 'package:golden_falcon/Models/CustomerModel/new_order_contactless_model.dart';
+import 'package:golden_falcon/Models/CustomerModel/not_available_model.dart';
 import 'package:golden_falcon/Models/CustomerModel/noti_delete_model.dart';
 import 'package:golden_falcon/Models/CustomerModel/notification_model.dart';
 import 'package:golden_falcon/Models/CustomerModel/order_items_model.dart';
@@ -1901,6 +1902,30 @@ class CustomerRepository {
       debugPrint('Service Price ${response.data}');
       if (response.statusCode == 200 ) {
         var result = ServicePriceListModel.fromJson(response.data);
+        return result;
+      } else {
+        return jsonDecode(response.data);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  // Not Available
+  Future<NotAvailableModel> getNotAvailableData({required String token, required List<String> orderNumbers}) async {
+    Options options = Options(receiveTimeout: Duration(minutes: 1),sendTimeout: Duration(minutes: 1),
+        headers: {
+          'Authorization': 'Basic $token'
+        });
+    try {
+      var body = {
+        "order_numbers": orderNumbers,
+      };
+      debugPrint('Not Available Body $body');
+      var response = await dio.post('${baseUrl}customer/not_available', data: body, options: options);
+      debugPrint('Not Available Response ${response.data}');
+      if (response.statusCode == 200 ) {
+        var result = NotAvailableModel.fromJson(response.data);
         return result;
       } else {
         return jsonDecode(response.data);

@@ -88,7 +88,7 @@ class _PersonalState extends State<Personal> {
           return Scaffold(
             backgroundColor: BgGrey,
             appBar: ScreenAppbar(
-                text: "Personal",
+                text: "Home",
                 svgNeed: true,
                 imagepath: "Assets/Images/personal_icon.svg",
                 colorChange: true),
@@ -233,18 +233,18 @@ class _PersonalState extends State<Personal> {
                         inputFormat: [FilteringTextInputFormatter.digitsOnly],
                         keyboardType: TextInputType.number
                       ),
-                      const SizedBox(height: 16),
-                      RegisterTextFormField(
-                        getController: buildingNoController,
-                        labelText: 'Building No:',
-                        imagePaths: 'Assets/Images/building_icon.svg',
-                        inputFormat: [FilteringTextInputFormatter.digitsOnly],
-                        keyboardType: TextInputType.number
-                      ),
+                      // const SizedBox(height: 16),
+                      // RegisterTextFormField(
+                      //   getController: buildingNoController,
+                      //   labelText: 'Building No:',
+                      //   imagePaths: 'Assets/Images/building_icon.svg',
+                      //   inputFormat: [FilteringTextInputFormatter.digitsOnly],
+                      //   keyboardType: TextInputType.number
+                      // ),
                       const SizedBox(height: 16),
                       RegisterTextFormField(
                         getController: buildingAddressController,
-                        labelText: 'Building Name',
+                        labelText: 'Building No / Name:',
                         imagePaths: 'Assets/Images/building_icon.svg',
                       ),
                       const SizedBox(height: 16),
@@ -298,13 +298,16 @@ class _PersonalState extends State<Personal> {
                               snackBar(context, message: 'Please enter phone number');
                             } else if (mobileController.text.length != 10) {
                               snackBar(context, message: 'Please enter valid phone number');
-                            } else if (whatsAppController.text.isEmpty) {
-                              snackBar(context, message: 'Please enter whats app number');
-                            } else if (whatsAppController.text.length != 10) {
-                              snackBar(context, message: 'Please enter valid whats app number');
-                            } else if (buildingNoController.text.isEmpty) {
-                              snackBar(context, message: 'Please enter building no:');
-                            } else if (buildingAddressController.text.isEmpty) {
+                            }
+                            // else if (whatsAppController.text.isEmpty) {
+                            //   snackBar(context, message: 'Please enter whats app number');
+                            // } else if (whatsAppController.text.length != 10) {
+                            //   snackBar(context, message: 'Please enter valid whats app number');
+                            // }
+                            // else if (buildingNoController.text.isEmpty) {
+                            //   snackBar(context, message: 'Please enter building no:');
+                            // }
+                            else if (buildingAddressController.text.isEmpty) {
                               snackBar(context, message: 'Please enter building name');
                             } else if (floorNoController.text.isEmpty) {
                               snackBar(context, message: 'Please enter floor number');
@@ -319,7 +322,7 @@ class _PersonalState extends State<Personal> {
                                   emailController.text,
                                   passwordController.text,
                                   'Home',
-                                  double.parse(buildingNoController.text).toInt(),
+                                  0,
                                   roomNoController.text,
                                   double.parse(mobileController.text).toInt(),
                                   0,
@@ -387,6 +390,7 @@ class _PersonalState extends State<Personal> {
   }
 
   showEmiratesListDialog(BuildContext context, List<EmiratesList> emirateList, Function(String) callback) {
+    emirateList.sort((a, b) => (a.name ?? "").compareTo(b.name ?? ""));
     return showCustomBottomSheet(
         context,
         title: 'Please choose a Emirate',
@@ -407,6 +411,7 @@ class _PersonalState extends State<Personal> {
   }
 
   showAreaListDialog(BuildContext context, List<AreaList> areaList, Function(String) callback) {
+    areaList.sort((a, b) => (a.name ?? "").compareTo(b.name ?? ""));
     return showCustomBottomSheet(
         context,
         title: 'Please choose a Area',
@@ -427,6 +432,7 @@ class _PersonalState extends State<Personal> {
   }
 
   showLocationListDialog(BuildContext context, List<LocationList> locationList) {
+    locationList.sort((a, b) => (a.name ?? "").compareTo(b.name ?? ""));
     return showCustomBottomSheet(
         context,
         title: 'Please choose a Locality',

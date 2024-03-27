@@ -41,7 +41,6 @@ class _NotificationsState extends State<Notifications> {
               ..add(GetNotificationEvent(authData.user_token!)),
           child: BlocBuilder<CustomerBloc, CustomerState>(
             builder: (context, state) {
-              print('state $state');
               if (state is NotificationFetching) {
                 return Container(color: Colors.transparent,
                     child: const Center(child: CircularProgressIndicator(
@@ -49,45 +48,64 @@ class _NotificationsState extends State<Notifications> {
                         backgroundColor: Colors.transparent)));
               } else if (state is NotificationFetched) {
                 data = state.notificationData!;
-                print('@@@@@@@@ length ${state.notificationData?.length}');
                 return state.notificationData?.isEmpty == true ?
                 const Center(
                     child: Text('No Notifications', style: TextStyle(fontSize: 14, color: textgrey, fontWeight: FontWeight.w600))
                 ) : ListView.builder(
-                    itemCount: data?.length,
+                    itemCount: data.length,
                     shrinkWrap: true,
                     physics: const ScrollPhysics(),
                     itemBuilder: (BuildContext context, index) {
-                      print('notification length ${data?.length}');
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                width: double.infinity,
-                                decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(Radius.circular(12))
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(18),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(data?[index].title ?? '--', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: textgrey)),
-                                      const SizedBox(height: 8),
-                                      Text(data?[index].body ?? '--', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: textgrey)),
-                                      const SizedBox(height: 12),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text('${data?[index].createdOn?.date != null ? formatDateYear(data?[index].createdOn?.date) :  '--'} at ${data?[index].createdOn?.time ?? '--'}', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: lightGreyText)),
-                                          SizedBox(
-                                            height: 22,
-                                            child: ElevatedButton(
-                                              onPressed: () {
+                      return Dismissible(
+                        key: Key(data[index].noticicationId.toString()),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          color: Colors.red,
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: const Icon(Icons.delete, color: Colors.white),
+                        ),
+                        onDismissed: (direction) async {
+                          await customerRepository.getNotiDeleteData(token: authData.user_token!, notificationId: data[index].noticicationId.toString()).then((value) {
+                            Future.delayed(const Duration(seconds: 1), () {
+                              data.removeAt(index);
+                              setState(() {});
+                            });
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(Radius.circular(12))
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(18),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(data[index].title ?? '--', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: textgrey)),
+                                              const SizedBox(height: 8),
+                                              Text(data[index].body ?? '--', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: textgrey)),
+                                              const SizedBox(height: 12),
+                                              Text('${data[index].createdOn?.date != null ? formatDateYear(data[index].createdOn?.date) :  '--'} at ${data[index].createdOn?.time ?? '--'}', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: lightGreyText)),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Column(
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
                                                 showDialog(
                                                   barrierDismissible: false,
                                                   context: context,
@@ -133,7 +151,7 @@ class _NotificationsState extends State<Notifications> {
                                                                     child: ElevatedButton(
                                                                       onPressed: () async {
                                                                         Navigator.pop(context);
-                                                                        await customerRepository.getNotiDeleteData(token: authData.user_token!, notificationId: data![index].noticicationId.toString()).then((value) {
+                                                                        await customerRepository.getNotiDeleteData(token: authData.user_token!, notificationId: data[index].noticicationId.toString()).then((value) {
                                                                           Future.delayed(const Duration(seconds: 1), () {
                                                                             data.removeAt(index);
                                                                             setState(() {});
@@ -159,25 +177,17 @@ class _NotificationsState extends State<Notifications> {
                                                   },
                                                 );
                                               },
-                                              style: ElevatedButton.styleFrom(
-                                                elevation: 0,
-                                                backgroundColor: Colors.white,
-                                                surfaceTintColor: Colors.white,
-                                                side: const BorderSide(width: 1.0, color: primaryColor),
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                                              ),
-                                              child: const Text('DELETE', style: TextStyle(fontSize: 12, color: textgrey, fontWeight: FontWeight.w600),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                                child: SvgPicture.asset('Assets/Images/trash.svg')
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     }

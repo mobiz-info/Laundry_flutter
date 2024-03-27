@@ -73,7 +73,7 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
               value.message == "Customer Wallet Details!") {
             emit(CustomerBalanceFetched(value.data));
           } else {
-            emit(CustomerBalanceError(value.message));
+            emit(CustomerBalanceError(value.message.toString()));
           }
         });
       } catch (e) {
@@ -1129,6 +1129,21 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
         });
       } catch (e) {
         emit(ServicePriceError(e.toString()));
+      }
+    });
+
+    on<NotAvailableEvent>((event, emit) async {
+      emit(NotAvailableFetching());
+      try {
+        await customerRepository.getNotAvailableData(token: event.token, orderNumbers: event.orderNumbers).then((value) {
+          if (value.message == "Data passed successfully") {
+            emit(NotAvailableFetched(value.message));
+          } else {
+            emit(NotAvailableError(value.message));
+          }
+        });
+      } catch (e) {
+        emit(NotAvailableError(e.toString()));
       }
     });
 

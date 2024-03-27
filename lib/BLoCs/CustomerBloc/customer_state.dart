@@ -15,18 +15,18 @@ class CustomerBalanceFetching extends CustomerState {
 }
 
 class CustomerBalanceFetched extends CustomerState {
-  final CData c_data;
+  final Data? data;
 
-  CustomerBalanceFetched(this.c_data);
+  const CustomerBalanceFetched(this.data);
 
   @override
-  List<Object?> get props => [c_data];
+  List<Object?> get props => [data];
 }
 
 class CustomerBalanceError extends CustomerState {
   final String message;
 
-  CustomerBalanceError(this.message);
+  const CustomerBalanceError(this.message);
 
   @override
   List<Object?> get props => [message];
@@ -1359,6 +1359,29 @@ class ServicePriceError extends CustomerState {
   final String? message;
 
   const ServicePriceError(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class NotAvailableFetching extends CustomerState {
+  @override
+  List<Object?> get props => [];
+}
+
+class NotAvailableFetched extends CustomerState {
+  final String? message;
+
+  const NotAvailableFetched(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class NotAvailableError extends CustomerState {
+  final String? message;
+
+  const NotAvailableError(this.message);
 
   @override
   List<Object?> get props => [message];

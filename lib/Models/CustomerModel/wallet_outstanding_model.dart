@@ -3,15 +3,15 @@ import 'dart:convert';
 /// data : {"wallet_balance":"418.0","outstanding":35.0,"name":"sreelekha","Todays_delivery":[{"order_number":"GFL141","total_amount":"3.0"},{"order_number":"GFL140","total_amount":"2.0"},{"order_number":"GFL139","total_amount":"10.0"},{"order_number":"GFL131","total_amount":"10.0"}]}
 /// message : "Customer Wallet Details!"
 
-WalletOutstandingModel walletOutstandingModelFromJson(String str) => WalletOutstandingModel.fromJson(json.decode(str));
-String walletOutstandingModelToJson(WalletOutstandingModel data) => json.encode(data.toJson());
-class WalletOutstandingModel {
-  WalletOutstandingModel({
+CustomerBalanceModel walletOutstandingModelFromJson(String str) => CustomerBalanceModel.fromJson(json.decode(str));
+String walletOutstandingModelToJson(CustomerBalanceModel data) => json.encode(data.toJson());
+class CustomerBalanceModel {
+  CustomerBalanceModel({
       this.stats, 
       this.data, 
       this.message,});
 
-  WalletOutstandingModel.fromJson(dynamic json) {
+  CustomerBalanceModel.fromJson(dynamic json) {
     stats = json['stats'];
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
     message = json['message'];

@@ -27,6 +27,13 @@ class ServiceDashboard extends StatefulWidget {
 
 class _ServiceDashboardState extends State<ServiceDashboard> {
 
+  Future<void> refresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {
+      context.read<ServiceBranchBloc>().add(GetServiceDashEvent(authData.user_token.toString()));
+    });
+  }
+
   Future<bool> showExitPopup() async {
     return await showDialog(
       context: context,
@@ -177,183 +184,187 @@ class _ServiceDashboardState extends State<ServiceDashboard> {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-              child: BlocBuilder<ServiceBranchBloc, ServiceBranchState>(
-                builder: (context, state) {
-                  if (state is ServiceDashFetching) {
-                    return Container(color: Colors.transparent,
-                        child: const Center(child: CircularProgressIndicator(
-                            color: primaryColor,
-                            backgroundColor: Colors.transparent)));
-                  } else if (state is ServiceDashFetched) {
-                    final data = state.serviceDashboardData;
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Service Dashboard', style: TextStyle(fontSize: 16, color: primaryColor, fontWeight: FontWeight.w500)),
-                        // const SizedBox(height: 12),
-                        // const Text('Hai User', style: TextStyle(fontSize: 14, color: textgrey, fontWeight: FontWeight.w300)),
-                        const SizedBox(height: 12),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: DashboardBox(
-                                dataNum: data?.dashboardCounts?.acceptOrders.toString() ?? '--', dataName: 'Accept Orders',
-                                onPressed: () async {
-                                  await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AcceptOrder())).then((value) {
-                                    context.read<ServiceBranchBloc>().add(GetServiceDashEvent(authData.user_token.toString()));
-                                  });
-                                },
+        body: RefreshIndicator(
+          onRefresh: refresh,
+          color: primaryColor,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                child: BlocBuilder<ServiceBranchBloc, ServiceBranchState>(
+                  builder: (context, state) {
+                    if (state is ServiceDashFetching) {
+                      return Container(color: Colors.transparent,
+                          child: const Center(child: CircularProgressIndicator(
+                              color: primaryColor,
+                              backgroundColor: Colors.transparent)));
+                    } else if (state is ServiceDashFetched) {
+                      final data = state.serviceDashboardData;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Service Dashboard', style: TextStyle(fontSize: 16, color: primaryColor, fontWeight: FontWeight.w500)),
+                          // const SizedBox(height: 12),
+                          // const Text('Hai User', style: TextStyle(fontSize: 14, color: textgrey, fontWeight: FontWeight.w300)),
+                          const SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: DashboardBox(
+                                  dataNum: data?.dashboardCounts?.acceptOrders.toString() ?? '--', dataName: 'Accept Orders',
+                                  onPressed: () async {
+                                    await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AcceptOrder())).then((value) {
+                                      context.read<ServiceBranchBloc>().add(GetServiceDashEvent(authData.user_token.toString()));
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: DashboardBox(
-                                dataNum: data?.dashboardCounts?.dashboardCountsNew.toString() ?? '--', dataName: 'New',
-                                onPressed: () async {
-                                  await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NewDash())).then((value) {
-                                    context.read<ServiceBranchBloc>().add(GetServiceDashEvent(authData.user_token.toString()));
-                                  });
-                                },
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: DashboardBox(
+                                  dataNum: data?.dashboardCounts?.dashboardCountsNew.toString() ?? '--', dataName: 'New',
+                                  onPressed: () async {
+                                    await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NewDash())).then((value) {
+                                      context.read<ServiceBranchBloc>().add(GetServiceDashEvent(authData.user_token.toString()));
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: DashboardBox(
-                                dataNum: data?.dashboardCounts?.pending.toString() ?? '--', dataName: 'Pending',
-                                onPressed: () async {
-                                  await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PendingOrders())).then((value) {
-                                    context.read<ServiceBranchBloc>().add(GetServiceDashEvent(authData.user_token.toString()));
-                                  });
-                                },
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: DashboardBox(
+                                  dataNum: data?.dashboardCounts?.pending.toString() ?? '--', dataName: 'Pending',
+                                  onPressed: () async {
+                                    await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PendingOrders())).then((value) {
+                                      context.read<ServiceBranchBloc>().add(GetServiceDashEvent(authData.user_token.toString()));
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: DashboardBox(
-                                dataNum: data?.dashboardCounts?.completed.toString() ?? '--', dataName: 'Completed',
-                                onPressed: () async {
-                                  await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CompletedOrders())).then((value) {
-                                    context.read<ServiceBranchBloc>().add(GetServiceDashEvent(authData.user_token.toString()));
-                                  });
-                                },
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: DashboardBox(
+                                  dataNum: data?.dashboardCounts?.completed.toString() ?? '--', dataName: 'Completed',
+                                  onPressed: () async {
+                                    await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CompletedOrders())).then((value) {
+                                      context.read<ServiceBranchBloc>().add(GetServiceDashEvent(authData.user_token.toString()));
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: DashboardBox(
-                                dataNum: data?.dashboardCounts?.readyForDelivery.toString() ?? '--', dataName: 'Ready for Delivery',
-                                onPressed: () async {
-                                  await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReadyDelivery())).then((value) {
-                                    context.read<ServiceBranchBloc>().add(GetServiceDashEvent(authData.user_token.toString()));
-                                  });
-                                },
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: DashboardBox(
+                                  dataNum: data?.dashboardCounts?.readyForDelivery.toString() ?? '--', dataName: 'Ready for Delivery',
+                                  onPressed: () async {
+                                    await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReadyDelivery())).then((value) {
+                                      context.read<ServiceBranchBloc>().add(GetServiceDashEvent(authData.user_token.toString()));
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 22),
-                        SizedBox(
-                          height: 38,
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const GenerateInvoice()));
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: primaryColor,
-                              surfaceTintColor: primaryColor,
-                              elevation: 0,
-                              side: const BorderSide(width: 2.0, color: Colors.white),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9),
+                            ],
+                          ),
+                          const SizedBox(height: 22),
+                          SizedBox(
+                            height: 38,
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const GenerateInvoice()));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: primaryColor,
+                                surfaceTintColor: primaryColor,
+                                elevation: 0,
+                                side: const BorderSide(width: 2.0, color: Colors.white),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9),
+                                ),
                               ),
-                            ),
-                            child: const Text('Generate Invoice', style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w500),
+                              child: const Text('Generate Invoice', style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w500),
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 12),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: SizedBox(
-                                height: 38,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const OrderStatus()));
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: primaryColor,
-                                    surfaceTintColor: primaryColor,
-                                    elevation: 0,
-                                    side: const BorderSide(width: 2.0, color: Colors.white),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9),
+                          const SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: SizedBox(
+                                  height: 38,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const OrderStatus()));
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: primaryColor,
+                                      surfaceTintColor: primaryColor,
+                                      elevation: 0,
+                                      side: const BorderSide(width: 2.0, color: Colors.white),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9),
+                                      ),
                                     ),
-                                  ),
-                                  child: const Text('Order Status', style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w500),
+                                    child: const Text('Order Status', style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w500),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: SizedBox(
-                                height: 38,
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ServiceNewOrder()));
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: primaryColor,
-                                    surfaceTintColor: primaryColor,
-                                    elevation: 0,
-                                    side: const BorderSide(width: 2.0, color: Colors.white),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: SizedBox(
+                                  height: 38,
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ServiceNewOrder()));
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: primaryColor,
+                                      surfaceTintColor: primaryColor,
+                                      elevation: 0,
+                                      side: const BorderSide(width: 2.0, color: Colors.white),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9),
+                                      ),
+                                    ),
+                                    child: const Text('New Order', style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  child: const Text('New Order', style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w500),
-                                  ),
                                 ),
+                                // SizedBox(
+                                //   height: 38,
+                                //   child: ElevatedButton(
+                                //     onPressed: () {
+                                //       Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Engage()));
+                                //     },
+                                //     style: ElevatedButton.styleFrom(
+                                //       backgroundColor: primaryColor,
+                                //       surfaceTintColor: primaryColor,
+                                //       elevation: 0,
+                                //       side: const BorderSide(width: 2.0, color: Colors.white),
+                                //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9),
+                                //       ),
+                                //     ),
+                                //     child: const Text('Engage', style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w500),
+                                //     ),
+                                //   ),
+                                // ),
                               ),
-                              // SizedBox(
-                              //   height: 38,
-                              //   child: ElevatedButton(
-                              //     onPressed: () {
-                              //       Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Engage()));
-                              //     },
-                              //     style: ElevatedButton.styleFrom(
-                              //       backgroundColor: primaryColor,
-                              //       surfaceTintColor: primaryColor,
-                              //       elevation: 0,
-                              //       side: const BorderSide(width: 2.0, color: Colors.white),
-                              //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9),
-                              //       ),
-                              //     ),
-                              //     child: const Text('Engage', style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w500),
-                              //     ),
-                              //   ),
-                              // ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 18),
-                        OrderTableWidget(serviceDashboardData: state.serviceDashboardData),
-                        const SizedBox(height: 18),
-                        const Text('Category wise orders', style: TextStyle(fontSize: 14, color: textgrey, fontWeight: FontWeight.w500)),
-                        CategoryTableWidget(serviceDashboardData: state.serviceDashboardData)
-                      ],
-                    );
+                            ],
+                          ),
+                          const SizedBox(height: 18),
+                          OrderTableWidget(serviceDashboardData: state.serviceDashboardData),
+                          const SizedBox(height: 18),
+                          const Text('Category wise orders', style: TextStyle(fontSize: 14, color: textgrey, fontWeight: FontWeight.w500)),
+                          CategoryTableWidget(serviceDashboardData: state.serviceDashboardData)
+                        ],
+                      );
+                    }
+                    else {
+                      return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
+                    }
                   }
-                  else {
-                    return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
-                  }
-                }
-              ),
+                ),
+            ),
           ),
         ),
       ),

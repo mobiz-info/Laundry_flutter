@@ -25,6 +25,38 @@ class _OrderStatusState extends State<OrderStatus> with SingleTickerProviderStat
   List<OrderStatusData>? orderStatusData = [];
   String selectedEmojiText = '';
   bool isDataLoaded = false;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final fromDate = DateTime.now().subtract(const Duration(days: 7));
+    final toDate = DateTime.now();
+
+    final formatter = DateFormat('dd-MM-yyyy');
+    final formattedFromDate = formatter.format(fromDate);
+    final formattedToDate = formatter.format(toDate);
+
+    fromDateController.text = formattedFromDate;
+    toDateController.text = formattedToDate;
+
+    fetchOrderStatusData(formattedFromDate, formattedToDate);
+  }
+
+  void fetchOrderStatusData(String fromDate, String toDate) {
+    setState(() {
+      isLoading = true;
+    });
+    customerRepository.getOrderStatusData(token: authData.user_token!, id: authData.user_id.toString(), fromDate: fromDate, toDate: toDate).then((value) {
+      setState(() {
+        orderStatusData = value.data;
+        isLoading = false;
+      });
+      if(value.status == false) {
+        snackBar(context, message: value.message.toString());
+      }
+    });
+  }
 
   void selectEmoji(String emojiText) {
     setState(() {
@@ -153,9 +185,13 @@ class _OrderStatusState extends State<OrderStatus> with SingleTickerProviderStat
                         } else if (toDateController.text.isEmpty) {
                           snackBar(context, message: 'Please choose To Date');
                         } else {
+                          setState(() {
+                            isLoading = true;
+                          });
                           customerRepository.getOrderStatusData(token: authData.user_token!, id: authData.user_id.toString(), fromDate: fromDateController.text, toDate: toDateController.text).then((value) {
                             setState(() {
                               orderStatusData = value.data;
+                              isLoading = false;
                             });
                             if(value.status == false) {
                               snackBar(context, message: value.message.toString());
@@ -178,12 +214,17 @@ class _OrderStatusState extends State<OrderStatus> with SingleTickerProviderStat
                 ],
               ),
               const SizedBox(height: 12),
+              if (isLoading) const CircularProgressIndicator(
+                color: primaryColor,
+              ),
+              if (!isLoading)
               ListView.builder(
                   physics: const ScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   itemCount: orderStatusData?.length,
                   itemBuilder: (BuildContext context, int index) {
+                    //orderStatusData!.sort((a, b) => a.orderDate!.compareTo(b.orderDate!));
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Container(
@@ -254,9 +295,7 @@ class _OrderStatusState extends State<OrderStatus> with SingleTickerProviderStat
                               Text('Delivery Date : ${orderStatusData?[index].deliveryDate ?? '--'}',
                                   style: const TextStyle(fontSize: 12.0, color: textgrey, fontWeight: FontWeight.w300)),
                               const SizedBox(height: 2),
-                              (orderStatusData?[index].status != null && orderStatusData?[index].status == "Delivered")
-                                ? Text('Amount Paid : ${orderStatusData?[index].totalAmount ?? '--'}', style: const TextStyle(fontSize: 12.0, color: textgrey, fontWeight: FontWeight.w300))
-                                : Text('Amount Payable: ${orderStatusData?[index].totalAmount ?? '--'}', style: const TextStyle(fontSize: 12.0, color: textgrey, fontWeight: FontWeight.w300)),
+                              Text('Amount : ${orderStatusData?[index].totalAmount ?? '--'}', style: const TextStyle(fontSize: 12.0, color: textgrey, fontWeight: FontWeight.w300)),
                               (orderStatusData?[index].status != null && orderStatusData?[index].status == "Delivered")
                                   ? Padding(
                                     padding: const EdgeInsets.only(top: 18),

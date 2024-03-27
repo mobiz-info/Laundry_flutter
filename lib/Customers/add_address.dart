@@ -3,12 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:golden_falcon/Picker_App/screens/customer_home.dart';
-
 import '../BLoCs/CustomerBloc/customer_bloc.dart';
 import '../Models/CustomerModel/area_list_model.dart';
 import '../Models/CustomerModel/emirates_list_model.dart';
-import '../Models/CustomerModel/location_list_model.dart';
 import '../Repositories/AuthRepo/auth_repository.dart';
 import '../Repositories/CustomerRepo/customer_repository.dart';
 import '../Utils/ScreenAppbar.dart';
@@ -267,11 +264,13 @@ class _AddAddressState extends State<AddAddress> {
                             snackBar(context, message: 'Please enter phone number');
                           } else if (mobileController.text.length != 10) {
                             snackBar(context, message: 'Please enter valid phone number');
-                          } else if (whatsAppController.text.isEmpty) {
-                            snackBar(context, message: 'Please enter whats app number');
-                          } else if (whatsAppController.text.length != 10) {
-                            snackBar(context, message: 'Please enter valid whats app number');
-                          }  else if (buildingAddressController.text.isEmpty) {
+                          }
+                          // else if (whatsAppController.text.isEmpty) {
+                          //   snackBar(context, message: 'Please enter whats app number');
+                          // } else if (whatsAppController.text.length != 10) {
+                          //   snackBar(context, message: 'Please enter valid whats app number');
+                          // }
+                          else if (buildingAddressController.text.isEmpty) {
                             snackBar(context, message: 'Please enter building name');
                           } else if (floorNoController.text.isEmpty) {
                             snackBar(context, message: 'Please enter floor number');

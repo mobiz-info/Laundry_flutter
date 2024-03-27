@@ -758,5 +758,15 @@ class ServicePriceEvent extends CustomerEvent {
   List<Object?> get props => [token, categoryId];
 }
 
+class NotAvailableEvent extends CustomerEvent {
+  final String token;
+  final List<String> orderNumbers;
+
+  const NotAvailableEvent(this.token, this.orderNumbers);
+
+  @override
+  List<Object?> get props => [token, orderNumbers];
+}
+
 
 
