@@ -9,6 +9,7 @@ import '../Repositories/AuthRepo/auth_repository.dart';
 import '../Repositories/CustomerRepo/customer_repository.dart';
 import '../Utils/ScreenAppbar.dart';
 import '../Utils/common.dart';
+import '../components/common_methods.dart';
 import '../src/Color.dart';
 
 class ChooseSubService extends StatefulWidget {
@@ -112,6 +113,10 @@ class _ChooseSubServiceState extends State<ChooseSubService> {
                                 );
                               },
                             );
+                          }
+                          else if (state is SubServicesError) {
+                            snackBar(context, message: state.message.toString());
+                            return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
                           }
                           else {
                             return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));

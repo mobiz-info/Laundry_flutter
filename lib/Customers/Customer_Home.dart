@@ -22,6 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../Loginscreen.dart';
 import '../Models/Carousal.dart';
 import '../Utils/ScreenAppbar.dart';
+import '../components/common_methods.dart';
 import '../src/Color.dart';
 import 'NewOrder.dart';
 import 'create_new_password.dart';
@@ -676,6 +677,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                   ),
                 ),
               );
+            }
+            else if (state is CustomerBalanceError) {
+              snackBar(context, message: state.message.toString());
+              return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
             }
             else {
               return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));

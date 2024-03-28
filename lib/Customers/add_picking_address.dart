@@ -101,6 +101,9 @@ class _AddPickingAddressState extends State<AddPickingAddress> {
             else if (state is CorporateSaveFetched) {
               corporateSaveResponse = state.corporateSaveData;
             }
+            else if (state is CorporateSaveError) {
+              snackBar(context, message: state.message.toString());
+            }
             else {
               return Container(color: Colors.white, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
             }

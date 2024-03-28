@@ -5,6 +5,7 @@ import '../BLoCs/CustomerBloc/customer_bloc.dart';
 import '../Repositories/AuthRepo/auth_repository.dart';
 import '../Repositories/CustomerRepo/customer_repository.dart';
 import '../Utils/ScreenAppbar.dart';
+import '../components/common_methods.dart';
 import '../src/Color.dart';
 
 class PricingScreen extends StatefulWidget {
@@ -40,7 +41,8 @@ class _PricingScreenState extends State<PricingScreen> {
                       child: const Center(child: CircularProgressIndicator(
                           color: primaryColor,
                           backgroundColor: Colors.transparent)));
-                } else if (state is PricingFetched) {
+                }
+                else if (state is PricingFetched) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -111,7 +113,12 @@ class _PricingScreenState extends State<PricingScreen> {
                       ),
                     ],
                   );
-                } else {
+                }
+                else if (state is PricingError) {
+                  snackBar(context, message: state.message.toString());
+                  return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
+                }
+                else {
                   return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
                 }
               }

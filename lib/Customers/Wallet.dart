@@ -8,6 +8,7 @@ import '../BLoCs/CustomerBloc/customer_bloc.dart';
 import '../Repositories/AuthRepo/auth_repository.dart';
 import '../Repositories/CustomerRepo/customer_repository.dart';
 import '../Utils/ScreenAppbar.dart';
+import '../components/common_methods.dart';
 import '../src/Color.dart';
 
 class Wallet extends StatefulWidget {
@@ -219,6 +220,10 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
                         ),
                       ),
                     );
+                  }
+                  else if (state is WalletTransactionError) {
+                    snackBar(context, message: state.message.toString());
+                    return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
                   }
                   else {
                     return Container(color: BgGrey, child: const Center(child: Text('No Wallet Transaction', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));

@@ -7,6 +7,7 @@ import '../BLoCs/CustomerBloc/customer_bloc.dart';
 import '../Repositories/AuthRepo/auth_repository.dart';
 import '../Repositories/CustomerRepo/customer_repository.dart';
 import '../Utils/ScreenAppbar.dart';
+import '../components/common_methods.dart';
 import '../src/Color.dart';
 
 class Notifications extends StatefulWidget {
@@ -46,7 +47,8 @@ class _NotificationsState extends State<Notifications> {
                     child: const Center(child: CircularProgressIndicator(
                         color: primaryColor,
                         backgroundColor: Colors.transparent)));
-              } else if (state is NotificationFetched) {
+              }
+              else if (state is NotificationFetched) {
                 data = state.notificationData!;
                 return state.notificationData?.isEmpty == true ?
                 const Center(
@@ -192,6 +194,10 @@ class _NotificationsState extends State<Notifications> {
                       );
                     }
                 );
+              }
+              else if (state is NotificationError) {
+                snackBar(context, message: state.message.toString());
+                return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
               }
               else {
                 return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));

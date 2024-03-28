@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,14 +8,17 @@ import 'package:golden_falcon/Owners/Dashboard/Navigation.dart';
 import 'package:golden_falcon/Repositories/AuthRepo/auth_repository.dart';
 import 'package:golden_falcon/push_notification.dart';
 import 'package:golden_falcon/src/Color.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'Customers/Customer_Home.dart';
 import 'Customers/choose_account_type.dart';
 import 'Customers/forget_password.dart';
 import 'Owners/Dashboard/Owner_dashboard.dart';
 import 'Picker_App/screens/homepage.dart';
+import 'Repositories/CustomerRepo/customer_repository.dart';
 import 'Service_Branch/service_dashboad.dart';
 import 'Service_Staff/Service_staff_dashboard_75.dart';
+import 'components/common_methods.dart';
 import 'main.dart';
 
 class LoginPage extends StatefulWidget {
@@ -22,6 +27,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final AuthRepository authRepository = AuthRepository();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   String _errorMessage = '';
@@ -171,6 +177,15 @@ class _LoginPageState extends State<LoginPage> {
     String password = _passwordController.text;
 
     BlocProvider.of<AuthBloc>(context).add(UserLoginEvent(username, password, deviceToken!));
+    // if (username.isEmpty) {
+    //   snackBar(context, message: 'Please enter User Name');
+    // }
+    // else if (password.isEmpty) {
+    //   snackBar(context, message: 'Please enter Password');
+    // }
+    // else {
+    //   _errorMessage = 'Invalid username or password';
+    // }
     // if (username == '111' && password == '111') {
     //   Navigator.pushReplacement(
     //     context,
@@ -401,6 +416,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 );
               }
+              // else if (state is LoginErrorState) {
+              //   snackBar(context, message: state.message.toString());
+              //   return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
+              // }
               else {
                 print(state.toString());
                 return Container(
@@ -522,8 +541,15 @@ class _LoginPageState extends State<LoginPage> {
                           height: 54,
                           child: ElevatedButton(
                             onPressed: () {
-                              print('111');
-                              BlocProvider.of<AuthBloc>(context).add(UserLoginEvent(_usernameController.text, _passwordController.text, deviceToken!));
+                              if (_usernameController.text.isEmpty) {
+                                snackBar(context, message: 'Please enter User Name');
+                              }
+                              else if (_passwordController.text.isEmpty) {
+                                snackBar(context, message: 'Please enter Password');
+                              }
+                              else {
+                                BlocProvider.of<AuthBloc>(context).add(UserLoginEvent(_usernameController.text, _passwordController.text, deviceToken!));
+                              }
                             },
                             child: Text(
                               'Login',

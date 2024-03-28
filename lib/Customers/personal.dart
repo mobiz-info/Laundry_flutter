@@ -82,6 +82,10 @@ class _PersonalState extends State<Personal> {
           else if (state is PersonalSaveFetched) {
             personalSaveResponse = state.personalSaveData;
           }
+          else if (state is PersonalSaveError) {
+            snackBar(context, message: state.message.toString());
+            return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
+          }
           else {
             return Container(color: Colors.white, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
           }

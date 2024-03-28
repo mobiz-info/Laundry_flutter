@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:golden_falcon/Models/CustomerModel/area_list_model.dart';
 import 'package:golden_falcon/Models/CustomerModel/category_model.dart';
 import 'package:golden_falcon/Models/CustomerModel/sub_category_model.dart';
@@ -20,7 +21,6 @@ import '../../Models/CustomerModel/corporate_save_model.dart';
 
 import '../../Models/CustomerModel/delivery_date_model.dart';
 import '../../Models/CustomerModel/delivery_mode_model.dart';
-import '../../Models/CustomerModel/device_token_model.dart';
 import '../../Models/CustomerModel/edit_profile_get_model.dart';
 import '../../Models/CustomerModel/edit_profile_model.dart';
 import '../../Models/CustomerModel/email_support_model.dart';
@@ -55,6 +55,7 @@ import '../../Models/CustomerModel/thank_you_model.dart';
 import '../../Models/CustomerModel/transaction_history_model.dart';
 import '../../Models/CustomerModel/wallet_transaction_model.dart';
 import '../../Repositories/CustomerRepo/customer_repository.dart';
+import '../../components/common_methods.dart';
 
 part 'customer_event.dart';
 part 'customer_state.dart';

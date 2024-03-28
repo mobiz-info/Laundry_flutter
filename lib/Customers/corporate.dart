@@ -41,6 +41,7 @@ class _CorporateState extends State<Corporate> {
           if (state is CorporateSaveFetching) {
             return Container(color: Colors.white, child: const Center(child: CircularProgressIndicator()));
           } else if (state is CorporateSaveError){
+            snackBar(context, message: state.message.toString());
             return Container(color: Colors.white, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
           }
           return Scaffold(

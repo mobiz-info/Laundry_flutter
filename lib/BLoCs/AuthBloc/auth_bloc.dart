@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:golden_falcon/components/common_methods.dart';
 
 import '../../Models/CustomerModel/device_token_model.dart';
 import '../../Repositories/AuthRepo/auth_repository.dart';

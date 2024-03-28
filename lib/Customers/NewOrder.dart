@@ -113,6 +113,10 @@ class _CustomerNewOrderState extends State<CustomerNewOrder> {
                           }
                       );
                     }
+                    else if (state is DeliveryModeError) {
+                      snackBar(context, message: state.message.toString());
+                      return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
+                    }
                     else {
                       return Container(color: Colors.white, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
                     }

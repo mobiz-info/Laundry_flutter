@@ -9,6 +9,7 @@ import '../BLoCs/CustomerBloc/customer_bloc.dart';
 import '../Repositories/AuthRepo/auth_repository.dart';
 import '../Repositories/CustomerRepo/customer_repository.dart';
 import '../Utils/ScreenAppbar.dart';
+import '../components/common_methods.dart';
 import '../src/Color.dart';
 
 class ComplaintScreen extends StatefulWidget {
@@ -40,7 +41,8 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                   child: const Center(child: CircularProgressIndicator(
                       color: primaryColor,
                       backgroundColor: Colors.transparent)));
-            } else if (state is ComplaintListFetched) {
+            }
+            else if (state is ComplaintListFetched) {
               final data = state.complaintListModel;
               return SingleChildScrollView(
                 child: Padding(padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
@@ -205,6 +207,10 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                   ),
                 ),
               );
+            }
+            else if (state is ComplaintListError) {
+              snackBar(context, message: state.message.toString());
+              return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
             }
             else {
               return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));

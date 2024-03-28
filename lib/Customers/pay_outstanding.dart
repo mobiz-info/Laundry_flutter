@@ -111,7 +111,8 @@ class _PayOutstandingState extends State<PayOutstanding> {
                           builder: (context, state) {
                             if (state is CartPaymentListFetching) {
                               return const Center(child: CircularProgressIndicator(color: primaryColor));
-                            } else if (state is CartPaymentListFetched) {
+                            }
+                            else if (state is CartPaymentListFetched) {
                               final data = state.cartPaymentList;
                               return ListView.builder(
                                 scrollDirection: Axis.vertical,
@@ -140,7 +141,12 @@ class _PayOutstandingState extends State<PayOutstanding> {
                                       },
                                     ),
                               );
-                            } else {
+                            }
+                            else if (state is CartPaymentListError) {
+                              snackBar(context, message: state.message.toString());
+                              return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
+                            }
+                            else {
                               return const Center(child: Text('No Data'));
                             }
                           }
