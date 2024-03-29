@@ -22,11 +22,13 @@ class AuthRepository {
       if (response.statusCode == 200 || response.statusCode == 201) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         var result = AuthModel.fromJson(jsonDecode(response.body));
-        authData.setData(result.data.tokEn, result.data.userType, result.data.id, result.data.username);
-        await prefs.setString('userId', result.data.id.toString());
-        await prefs.setString('userToken', result.data.tokEn.toString());
-        await prefs.setString('userType', result.data.userType.toString());
-        await getDeviceTokenData(deviceToken: deviceToken, userId: authData.user_id.toString());
+        if(result.status == true) {
+          authData.setData(result.data!.tokEn.toString(), result.data!.userType.toString(), result.data!.id!.toInt(), result.data!.username.toString());
+          await prefs.setString('userId', result.data!.id.toString());
+          await prefs.setString('userToken', result.data!.tokEn.toString());
+          await prefs.setString('userType', result.data!.userType.toString());
+          await getDeviceTokenData(deviceToken: deviceToken, userId: authData.user_id.toString());
+        }
         return result;
       } else {
         return jsonDecode(response.body);
@@ -59,3 +61,5 @@ class AuthRepository {
   }
 
 }
+
+

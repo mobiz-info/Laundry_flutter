@@ -17,11 +17,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<UserLoginEvent>((event, emit) async {
       emit(LoginInitialState());
       try {
-        await authRepository.loginUser(username: event.username, password: event.password, deviceToken: event.deviceToken)
-            .then(
-          (value) {
+        await authRepository.loginUser(username: event.username, password: event.password, deviceToken: event.deviceToken).then((value) {
             if (value.status == true && value.message == "Authenticated User!") {
-              emit(LoginSuccessState(value.data.id.toString(), value.data.tokEn, value.data.userType));
+              emit(LoginSuccessState(value.data!.id.toString(), value.data!.tokEn.toString(), value.data!.userType.toString()));
             } else {
               emit(LoginErrorState(value.message.toString()));
             }

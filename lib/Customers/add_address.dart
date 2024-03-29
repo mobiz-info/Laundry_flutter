@@ -80,9 +80,9 @@ class _AddAddressState extends State<AddAddress> {
                 else if (state is AddAddressFetched) {
                   personalSaveResponse = state.addAddressData;
                 }
-                else if (state is AddAddressError) {
-                  snackBar(context, message: state.message.toString());
-                }
+                // else if (state is AddAddressError) {
+                //   snackBar(context, message: state.message.toString());
+                // }
                 else {
                   return Container(color: Colors.white, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
                 }

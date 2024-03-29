@@ -87,7 +87,7 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const RechargeWallet()));
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, surfaceTintColor: Colors.white,
+                    backgroundColor: Colors.white, surfaceTintColor: Colors.white, elevation: 0,
                     side: const BorderSide(width: 1.6, color: primaryColor),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
                   ),
@@ -222,7 +222,9 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
                     );
                   }
                   else if (state is WalletTransactionError) {
-                    snackBar(context, message: state.message.toString());
+                    Future.delayed(const Duration(milliseconds: 500), () {
+                      snackBar(context, message: state.message.toString());
+                    });
                     return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
                   }
                   else {

@@ -21,13 +21,13 @@ class AddPickingAddress extends StatefulWidget {
   final String trn;
   final String billingAddress;
   final String customerType;
-  final int mobileNumber;
+  final String mobileNumber;
   final String emailId;
   final String name;
-  final int altMobile;
+  final String altMobile;
   final String designation;
   final String altEmail;
-  final int whatsApp;
+  final String whatsApp;
   final String userName;
   final String password;
 
@@ -101,9 +101,9 @@ class _AddPickingAddressState extends State<AddPickingAddress> {
             else if (state is CorporateSaveFetched) {
               corporateSaveResponse = state.corporateSaveData;
             }
-            else if (state is CorporateSaveError) {
-              snackBar(context, message: state.message.toString());
-            }
+            // else if (state is CorporateSaveError) {
+            //   snackBar(context, message: state.message.toString());
+            // }
             else {
               return Container(color: Colors.white, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
             }

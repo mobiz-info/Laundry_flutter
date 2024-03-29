@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:golden_falcon/Customers/otp.dart';
-
 import '../BLoCs/CustomerBloc/customer_bloc.dart';
 import '../components/common_methods.dart';
 import '../src/Color.dart';

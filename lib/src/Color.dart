@@ -15,6 +15,7 @@ const Color formBoxColor=Color(0xFFF3F3F3);
 const Color emailBoxColor=Color(0xFFE7DBA0);
 const Color primaryColor=Color(0xFFA38E23);
 const Color redColor=Color(0xFFCD0C0C);
+const Color notAvaiColor=Color(0xFFEC4335);
 const Color greenColor=Color(0xFF107E0E);
 const Color tableLightGrey=Color(0xFFF2F2F2);
 const Color incDecBorderColor=Color(0xFFCEDCDF);

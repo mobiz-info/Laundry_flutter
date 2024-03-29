@@ -209,7 +209,9 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
               );
             }
             else if (state is ComplaintListError) {
-              snackBar(context, message: state.message.toString());
+              Future.delayed(const Duration(milliseconds: 500), () {
+                snackBar(context, message: state.message.toString());
+              });
               return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
             }
             else {

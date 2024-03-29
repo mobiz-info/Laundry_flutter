@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -100,6 +102,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
     );
   }
 
+  void closeAppUsingExit() {
+    exit(0);
+  }
+
   Future<bool> showExitPopup() async {
     return await showDialog(
       context: context,
@@ -111,18 +117,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
           padding: EdgeInsets.only(top: 18),
           child: Text('Exit App', textAlign: TextAlign.center, style: TextStyle(fontSize: 18, color: textgrey, fontWeight: FontWeight.w600)),
         ),
-        content: const SizedBox(
-            height: 50,
-            child: Center(
-              child: Padding(padding: EdgeInsets.only(top: 10),
-                child: Column(
-                  children: [
-                    Text('Do you Really Want to', textAlign: TextAlign.center,  style: TextStyle(fontSize: 14, color: textgrey, fontWeight: FontWeight.w400)),
-                    Text('Close the App ?', textAlign: TextAlign.center,  style: TextStyle(fontSize: 14, color: textgrey, fontWeight: FontWeight.w400))
-                  ],
-                ),
-              ),
-            )),
+        content: const Text('Do you really want to exit?', textAlign: TextAlign.center,  style: TextStyle(fontSize: 14, color: textgrey, fontWeight: FontWeight.w400)),
         actions:[
           const SizedBox(height: 12),
           Row(
@@ -149,11 +144,9 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 child: SizedBox(
                   height: 42, width: 120,
                   child: ElevatedButton(
-                    onPressed: () async {
-                      authData.clearData();
-                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                      prefs.clear();
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()),(route) => false);
+                    onPressed: () {
+                      closeAppUsingExit();
+                      context.read<CustomerBloc>().add(GetBalanceEvent(authData.user_token!, authData.user_id.toString()));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor, surfaceTintColor: Colors.white, elevation: 0,
@@ -202,11 +195,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                   needAlign: false,
                 ),
                 drawer: Drawer(
-                  elevation: 0,
                   shadowColor: Colors.transparent,
                   backgroundColor: BgGrey,
                   child: ListView(
-                    padding: EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(0),
                     children: [
                       Theme(
                         data: Theme.of(context).copyWith(
@@ -572,13 +564,13 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                                                             }
                                                           },
                                                           style: ElevatedButton.styleFrom(
-                                                            backgroundColor: Colors.white,
+                                                            backgroundColor: notAvaiColor,
                                                             surfaceTintColor: Colors.white,
                                                             elevation: 0,
-                                                            side: const BorderSide(width: 1, color: redColor),
+                                                            side: const BorderSide(width: 1, color: notAvaiColor),
                                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                                           ),
-                                                          child: const Text('Not available', style: TextStyle(fontSize: 11, color: redColor, fontWeight: FontWeight.w400),
+                                                          child: const Text('Not available', style: TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w400),
                                                           ),
                                                         ),
                                                       ),
@@ -588,7 +580,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                                               ),
                                             ),
                                             const SizedBox(height: 8),
-                                            Container(
+                                            SizedBox(
                                               width: double.infinity,
                                               child: Card(
                                                 elevation: 0,
@@ -679,7 +671,9 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
               );
             }
             else if (state is CustomerBalanceError) {
-              snackBar(context, message: state.message.toString());
+              Future.delayed(const Duration(milliseconds: 500), () {
+                snackBar(context, message: state.message.toString());
+              });
               return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
             }
             else {

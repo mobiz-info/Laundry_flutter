@@ -196,13 +196,13 @@ class _CorporateState extends State<Corporate> {
                                   trn: trnNoController.text,
                                   billingAddress: billingAddressController.text,
                                   customerType: 'Co-operate',
-                                  mobileNumber: int.parse(mobileController.text),
+                                  mobileNumber: mobileController.text,
                                   emailId: emailIDController.text,
                                   name: nameController.text,
-                                  altMobile: int.parse(altMobileController.text),
+                                  altMobile: altMobileController.text,
                                   designation: designationController.text,
                                   altEmail: emailRegController.text,
-                                  whatsApp: int.parse(whatsAppController.text),
+                                  whatsApp: whatsAppController.text,
                                   userName: altMobileController.text,
                                   password: passwordController.text
                               )

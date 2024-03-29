@@ -109,9 +109,9 @@ class GetPersonalSaveEvent extends CustomerEvent {
   final String customerType;
   final int buildingNo;
   final String roomNo;
-  final int mobile;
+  final String mobile;
   final int altMobile;
-  final int whatsApp;
+  final String whatsApp;
   final int creditLimit;
   final int creditDays;
   final int creditInvoices;
@@ -166,9 +166,9 @@ class GetCorporateSaveEvent extends CustomerEvent {
   final String buildingNo;
   final String roomNo;
   final String regEmail;
-  final int mobile;
-  final int altMobile;
-  final int whatsApp;
+  final String mobile;
+  final String altMobile;
+  final String whatsApp;
   final int creditLimit;
   final int creditDays;
   final int creditInvoices;

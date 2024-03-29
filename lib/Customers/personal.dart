@@ -68,7 +68,7 @@ class _PersonalState extends State<Personal> {
         builder: (context, state) {
           print('state2222 ${state}');
           if (state is EmiratesFetching || state is AreaFetching || state is LocationFetching || state is PersonalSaveFetching) {
-            return Container(color: Colors.white, child: const Center(child: CircularProgressIndicator()));
+            return Container(color: Colors.white, child: const Center(child: CircularProgressIndicator(color: primaryColor)));
           }
           else if (state is EmiratesFetched) {
             emirateResponse = state.emiratesData;
@@ -82,10 +82,10 @@ class _PersonalState extends State<Personal> {
           else if (state is PersonalSaveFetched) {
             personalSaveResponse = state.personalSaveData;
           }
-          else if (state is PersonalSaveError) {
-            snackBar(context, message: state.message.toString());
-            return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
-          }
+          // else if (state is PersonalSaveError) {
+          //   snackBar(context, message: state.message.toString());
+          //   return Container(color: BgGrey, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
+          // }
           else {
             return Container(color: Colors.white, child: const Center(child: Text('No Data', style: TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w600))));
           }
@@ -321,16 +321,16 @@ class _PersonalState extends State<Personal> {
                               snackBar(context, message: 'Please enter password');
                             } else {
                               BlocProvider.of<CustomerBloc>(context).add(GetPersonalSaveEvent(
-                                  double.parse(mobileController.text).toInt().toString(),
+                                  mobileController.text,
                                   nameController.text,
                                   emailController.text,
                                   passwordController.text,
                                   'Home',
                                   0,
                                   roomNoController.text,
-                                  double.parse(mobileController.text).toInt(),
+                                  mobileController.text,
                                   0,
-                                  double.parse(whatsAppController.text).toInt(),
+                                  whatsAppController.text,
                                   0,
                                   0,
                                   0,

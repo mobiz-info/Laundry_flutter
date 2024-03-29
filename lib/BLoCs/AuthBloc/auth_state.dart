@@ -19,7 +19,7 @@ class LoginSuccessState extends AuthState {
   final String token;
   final String user_id;
 
-  LoginSuccessState(this.user_id, this.token, this.usertype);
+  const LoginSuccessState(this.user_id, this.token, this.usertype);
 
   @override
   List<Object?> get props => [user_id, usertype, token];
@@ -28,7 +28,7 @@ class LoginSuccessState extends AuthState {
 class LoginErrorState extends AuthState {
   final String message;
 
-  LoginErrorState(this.message);
+  const LoginErrorState(this.message);
 
   @override
   List<Object?> get props => [message];

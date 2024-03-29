@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +32,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController messageController = TextEditingController();
 
+  void closeAppUsingExit() {
+    exit(0);
+  }
+
   Future<bool> showExitPopup() async {
     return await showDialog(
       context: context,
@@ -41,18 +47,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
           padding: EdgeInsets.only(top: 18),
           child: Text('Exit App', textAlign: TextAlign.center, style: TextStyle(fontSize: 18, color: textgrey, fontWeight: FontWeight.w600)),
         ),
-        content: const SizedBox(
-            height: 50,
-            child: Center(
-              child: Padding(padding: EdgeInsets.only(top: 10),
-                child: Column(
-                  children: [
-                    Text('Do you Really Want to', textAlign: TextAlign.center,  style: TextStyle(fontSize: 14, color: textgrey, fontWeight: FontWeight.w400)),
-                    Text('Close the App ?', textAlign: TextAlign.center,  style: TextStyle(fontSize: 14, color: textgrey, fontWeight: FontWeight.w400))
-                  ],
-                ),
-              ),
-            )),
+        content: const Text('Do you really want to exit?', textAlign: TextAlign.center,  style: TextStyle(fontSize: 14, color: textgrey, fontWeight: FontWeight.w400)),
         actions:[
           const SizedBox(height: 12),
           Row(
@@ -79,10 +74,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                 child: SizedBox(
                   height: 42, width: 120,
                   child: ElevatedButton(
-                    onPressed: () async {
-                      // authData.user_id = null ;
-                      // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage(),),(route) => false);
-                      Navigator.of(context).pop(true);
+                    onPressed: () {
+                      closeAppUsingExit();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor, surfaceTintColor: Colors.white, elevation: 0,
