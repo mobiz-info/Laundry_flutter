@@ -33,7 +33,7 @@ class _CartScreenState extends State<CartScreen> {
   final TextEditingController paymentListController = TextEditingController();
   var paymentResponse;
   bool isExpanded = false;
-  String selectedOption = 'Choose Payment method';
+  String selectedOption = 'Cash on delivery';
   var selectedWallet;
   String? selectedValue = '';
   var deliveryAdd;
@@ -500,9 +500,9 @@ class _CartScreenState extends State<CartScreen> {
                           width: double.infinity, height: 54,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (selectedOption == 'Choose Payment method') {
-                                snackBar(context, message: 'Please choose payment method');
-                              } else {
+                              // if (selectedOption == 'Choose Payment method') {
+                              //   snackBar(context, message: 'Please choose payment method');
+                              // } else {
                                 customerRepository.getPlaceOrderData(
                                     token: authData.user_token!,
                                     id: authData.user_id!,
@@ -519,7 +519,7 @@ class _CartScreenState extends State<CartScreen> {
                                   customerId: state.cartListData!.cart![0].order!.customer!.customerId.toString(),
                                   customerName: state.cartListData!.cart![0].order!.customer!.name.toString(),
                                 )));
-                              }
+                              //}
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primaryColor, elevation: 0,

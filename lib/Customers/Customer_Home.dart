@@ -224,7 +224,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const Edit()));
                         },
                       ),
-                      Divider(color: DividerGrey.withOpacity(0.6)),
+                      Divider(color: lightGreyText.withOpacity(0.8)),
                       ListTile(
                         dense: true,
                         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
@@ -234,7 +234,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderStatus()));
                         },
                       ),
-                      Divider(color: DividerGrey.withOpacity(0.6)),
+                      Divider(color: lightGreyText.withOpacity(0.8)),
                       ListTile(
                         dense: true,
                         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
@@ -244,7 +244,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const TransactionHistory()));
                         },
                       ),
-                      Divider(color: DividerGrey.withOpacity(0.6)),
+                      Divider(color: lightGreyText.withOpacity(0.8)),
                       ListTile(
                         dense: true,
                         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
@@ -254,7 +254,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const ComplaintScreen()));
                         },
                       ),
-                      Divider(color: DividerGrey.withOpacity(0.6)),
+                      Divider(color: lightGreyText.withOpacity(0.8)),
                       ListTile(
                         dense: true,
                         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
@@ -267,7 +267,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           );
                         },
                       ),
-                      Divider(color: DividerGrey.withOpacity(0.6)),
+                      Divider(color: lightGreyText.withOpacity(0.8)),
                       ListTile(
                         dense: true,
                         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
@@ -277,7 +277,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const MyAddresses()));
                         },
                       ),
-                      Divider(color: DividerGrey.withOpacity(0.6)),
+                      Divider(color: lightGreyText.withOpacity(0.8)),
                       ListTile(
                         dense: true,
                         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
@@ -287,7 +287,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const SideBarFeedback()));
                         },
                       ),
-                      Divider(color: DividerGrey.withOpacity(0.6)),
+                      Divider(color: lightGreyText.withOpacity(0.8)),
                       ListTile(
                         dense: true,
                         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
@@ -297,7 +297,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const OurBranches()));
                         },
                       ),
-                       Divider(color: DividerGrey.withOpacity(0.6)),
+                      Divider(color: lightGreyText.withOpacity(0.8)),
                       ListTile(
                         dense: true,
                         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
@@ -307,7 +307,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const TermsConditions()));
                         },
                       ),
-                       Divider(color: DividerGrey.withOpacity(0.6)),
+                      Divider(color: lightGreyText.withOpacity(0.8)),
                       ListTile(
                         dense: true,
                         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
@@ -317,11 +317,11 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           showLogoutConfirmationDialog(context);
                         },
                       ),
-                      Divider(color: DividerGrey.withOpacity(0.6)),
+                      Divider(color: lightGreyText.withOpacity(0.8)),
                       const SizedBox(height: 28),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 18),
-                        child: Text('Version : 1.0.0', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: textgrey)),
+                        child: Text('VERSION : 1.0.0', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, letterSpacing: 2.8, fontWeight: FontWeight.w500, color: textgrey)),
                       ),
                       const SizedBox(height: 68),
                     ],
