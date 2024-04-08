@@ -50,6 +50,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                     children: [
                       Container(
                         color: BgGrey,
+                        width: double.infinity,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
                           child: Column(
