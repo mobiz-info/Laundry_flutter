@@ -80,7 +80,7 @@ class _RegisterComplaintListState extends State<RegisterComplaintList> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(data?[index].status ?? '--', style: const TextStyle(fontSize: 14.0, color: textgrey, fontWeight: FontWeight.w500)),
-                                            Text(data?[index].deliveryDate != null ? formatDateYear(data?[index].deliveryDate) : '--', style: const TextStyle(fontSize: 12, color: textgrey, fontWeight: FontWeight.w300)),
+                                            Text(data?[index].deliveryDate ?? '--', style: const TextStyle(fontSize: 12, color: textgrey, fontWeight: FontWeight.w300)),
                                           ],
                                         ),
                                       ),
